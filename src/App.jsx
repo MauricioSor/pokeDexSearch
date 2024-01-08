@@ -11,14 +11,16 @@ function App() {
   const [pokemon,setPokemon]=useState([])
 
   const busquedaPokemon =(value)=>{
-    setBusqueda(false)
+    
     enviarBusquedaPokemon(value).then((resp)=>{
+      console.log(resp)
       if(resp.status==200){
         console.log(resp.data);
-        setPokemon(resp.status);
+        setPokemon([resp]);
       }else{
         console.log("Error de servidor")
       }
+      setBusqueda(false)
     })
   }
   
@@ -27,8 +29,8 @@ function App() {
       {
         busqueda  ?
           (<LeyendaInicio />) :
-          pokemon.map(item=>(
-            <Pokemon item={item} key={item.id} />
+          pokemon.map((item,index)=>(
+            <Pokemon item={item} key={index} />
           ))
       }
       <Buscador busquedaPokemon={(value)=>busquedaPokemon(value)}/>
