@@ -4,6 +4,8 @@ import Buscador from './components/Buscador'
 import Pokemon from './components/Pokemon'
 import LeyendaInicio from './components/LeyendaInicio'
 import { enviarBusquedaPokemon } from './helpers/queries'
+import Footer from './components/common/Footer'
+import Swal from 'sweetalert2'
 
 function App() {
 
@@ -13,19 +15,23 @@ function App() {
   const busquedaPokemon =(value)=>{
     
     enviarBusquedaPokemon(value).then((resp)=>{
-      console.log(resp)
       if(resp.status==200){
-        console.log(resp.data);
         setPokemon([resp]);
+        setBusqueda(false)
       }else{
         console.log("Error de servidor")
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No encontramos el pokemon que ingresaste :( Prueba con uno distinto!",
+        });
       }
-      setBusqueda(false)
     })
   }
   
   return (
     <>
+    
       {
         busqueda  ?
           (<LeyendaInicio />) :
@@ -34,6 +40,7 @@ function App() {
           ))
       }
       <Buscador busquedaPokemon={(value)=>busquedaPokemon(value)}/>
+      <Footer/>
     </>
   )
 }

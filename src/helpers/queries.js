@@ -7,5 +7,6 @@ export const enviarBusquedaPokemon = async(pokemon)=>{
         return resp
     } catch (error) {
         console.log(error)
+        return error
     }
 }
